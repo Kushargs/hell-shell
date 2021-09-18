@@ -21,6 +21,10 @@ char HOME[buff_sz];
 char PREV_PATH[buff_sz];
 char PATH[buff_sz];
 
+char history_list[100][buff_sz];
+int history_index_r;
+int history_index_w;
+
 void prompt();
 void parser(char *line, char command_array[][1000], int *no_of_commands, char *delimiter);
 void execute(char *command);
@@ -31,5 +35,5 @@ void ECHO();
 void LS(char *arguments[100], int no_of_arguments);
 void OTHER_COMMAND(char* command, char* argumants[100], int no_of_arguments);
 void PINFO(char* arguments[100], int no_of_arguments);
-
+void HISTORY();
 void child_died(int signal);

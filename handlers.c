@@ -13,7 +13,7 @@ void child_died(int signal)
 
         if (WIFEXITED(status))
         {
-            printf("\npid: %d exited normally, status = %d\n", pid, WEXITSTATUS(status));
+            fprintf(stderr, "\npid: %d exited normally, status = %d\n", pid, WEXITSTATUS(status));
 
         return;
     }

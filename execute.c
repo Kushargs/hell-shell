@@ -53,6 +53,10 @@ void execute(char *command)
     {
         PINFO(argument, no_of_arguments);
     }
+    else if (strcmp(command_name, "history") == 0)
+    {
+        HISTORY(argument, no_of_arguments);
+    }
     else if (strcmp(command_name, "repeat") == 0)
     {
         char temp[buff_sz];
