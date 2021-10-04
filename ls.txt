@@ -1,1 +1,0 @@
-makefile  sort_in.txt  history.c  othercmd.c  README.md  parser.c  sort_test.txt  pinfo.c  prompt.c  rot.txt  redirection.c  lol.txt  syscmd.c  handlers.c  main.c  ls.c  execute.c  ls.txt  history.txt  headers.h  output.txt  a.out  
