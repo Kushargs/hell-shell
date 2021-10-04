@@ -16,6 +16,7 @@ void OTHER_COMMAND(char *command, char *argumants[100], int no_of_arguments)
         else
         {
             args[index] = strdup(argumants[i]);
+            // printf("args:%s", args[index] );
             // strcpy(args[index], argumants[i]);
             index++;
         }

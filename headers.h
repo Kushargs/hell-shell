@@ -11,6 +11,8 @@
 #include <time.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <fcntl.h>
+
 
 int errno;
 
@@ -37,3 +39,4 @@ void OTHER_COMMAND(char* command, char* argumants[100], int no_of_arguments);
 void PINFO(char* arguments[100], int no_of_arguments);
 void HISTORY();
 void child_died(int signal);
+void REDIRECT(char* command, int in_dir, int out_dir, int out_dir_a);
