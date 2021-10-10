@@ -33,10 +33,24 @@ void execute(char *command)
     char command_name[buff_sz];
     char *argument[100];
     int no_of_arguments;
-     int in_dir = 0;
+    int in_dir = 0;
     int out_dir = 0;
     int out_dir_a = 0;
     get_command_arguments(command, command_name, argument, &no_of_arguments);
+
+    int flg_pipe = 0;
+    //CHECK PIPing
+    for (int i = 0; i < no_of_arguments; i++)
+        if (strcmp(argument[i], "|") == 0)
+            flg_pipe = 1;
+
+    if (flg_pipe == 1)
+    {
+        // printf("im here\n");
+        PIPE(command);
+        return;
+    }
+
     //CHECK REDIRECTION
     for (int i = 0; i < no_of_arguments; i++)
     {
@@ -52,8 +66,6 @@ void execute(char *command)
         REDIRECT(command, in_dir, out_dir, out_dir_a);
         return;
     }
-
-   
 
     if (strcmp(command_name, "ls") == 0)
         LS(argument, no_of_arguments);
@@ -77,6 +89,26 @@ void execute(char *command)
     else if (strcmp(command_name, "history") == 0)
     {
         HISTORY(argument, no_of_arguments);
+    }
+    else if (strcmp(command_name, "jobs") == 0)
+    {
+        JOBS(argument, no_of_arguments);
+    }
+    else if (strcmp(command_name, "sig") == 0)
+    {
+        SIG(argument, no_of_arguments);
+    }
+    else if (strcmp(command_name, "fg") == 0)
+    {
+        FG(argument, no_of_arguments);
+    }
+    else if (strcmp(command_name, "bg") == 0)
+    {
+        BG(argument, no_of_arguments);
+    }
+    else if (strcmp(command_name, "replay") == 0)
+    {
+        REPLAY(argument, no_of_arguments);
     }
     else if (strcmp(command_name, "repeat") == 0)
     {

@@ -1,4 +1,6 @@
 #include "headers.h"
+extern int no_of_jobs;
+extern struct Proc proc[100];
 
 void OTHER_COMMAND(char *command, char *argumants[100], int no_of_arguments)
 {
@@ -54,7 +56,15 @@ void OTHER_COMMAND(char *command, char *argumants[100], int no_of_arguments)
         }
         else
         {
-            printf("[%d]\n",child_id);
+            proc[no_of_jobs].pid = child_id;
+            proc[no_of_jobs].name = args[0];
+            getstatus(no_of_jobs);
+            proc[no_of_jobs].type = 1;
+            no_of_jobs++;
+            // printf("no_of_jobs: %d\n",  no_of_jobs);
+            // printf("name: %s\n", proc[no_of_jobs].name );
+
+            printf("[%d]\n", child_id);
             return;
         }
     }
@@ -63,30 +73,43 @@ void OTHER_COMMAND(char *command, char *argumants[100], int no_of_arguments)
     else
     {
         int err;
-        
+
         if (child_id == -1)
             perror("incompetent");
         else if (child_id == 0)
         {
+            signal(SIGINT, SIG_DFL);
+            signal(SIGTSTP, SIG_DFL);
+            signal(SIGTTIN, SIG_DFL);
             err = execvp(command, args);
             if (err < 0)
             {
                 perror("erecvp");
                 return;
             }
-
             exit(0);
         }
         else
         {
-            int err = waitpid(-1, NULL, WUNTRACED);
-            if (err < 0)
-            {
-                perror("waitpid");
-            }
+            proc[no_of_jobs].pid = child_id;
+            proc[no_of_jobs].name = args[0];
+            getstatus(no_of_jobs);
+            proc[no_of_jobs].type = 0;
+            no_of_jobs++;
+            // printf("no_of_jobs: %d\n",  no_of_jobs);
+            // printf("name: %s\n", proc[no_of_jobs].name );
+
+            while (waitpid(child_id, NULL, WUNTRACED) > 0)
+                break;
+
+            signal(SIGINT, SIG_IGN);
+
+            // if (err < 0)
+            // {
+            //     perror("waitpid");
+            // }
 
             return;
         }
-
     }
 }
